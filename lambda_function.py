@@ -30,7 +30,9 @@ def validate_data(age,investment_amount,intent_request):
     if age is not None:
         if age >= 65: 
             return build_validation_result(False,"age","You should be under 65 years of age to use this service. Please try again...",)
-
+        elif age < 0:
+            return build_validation_result(False,"age","Your age cannot be less than 0. Please try again ...",)
+        
     if investment_amount < 5000:
         return build_validation_result(False,"investment_amount","You need to invest at least $5000. Please try again...")
 
