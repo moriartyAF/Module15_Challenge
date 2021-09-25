@@ -137,7 +137,6 @@ def recommend_portfolio(intent_request):
     #Perform basic validation on the supplied input slots
     if source == "Dialog_CodeHook":
         slots == get_slots(intent_request)
-        
         if not validation_result["isValid"]:
             slots[validation_result["violatedSlot"]] = None
             return elicit_slot(
@@ -146,18 +145,20 @@ def recommend_portfolio(intent_request):
                 slot,
                 validation_result["violatedSlot"],
                 validation_result["message"],)
-    
         output_session_attributes = intent_request["sessionAttributes"]
-
         return delegate(output_session_attributes,get_slots(intent_request))
 
+    #Set Investment Amount as Integer
     inv_amt_float = parse_int(investment_amount)
+    
+    #Initialize variables
     recommendation = ""
     risk_level_none = "100% bonds (AGG), 0% equities (SPY)"
     risk_level_low = "60% bonds (AGG), 40% equities (SPY)"
     risk_level_med = "40% bonds (AGG), 60% equities (SPY)"
     risk_level_high = "20% bonds (AGG), 80% equities (SPY)"
 
+    #Set recommendation text according to risk level
     if risk_level == "none":
         recommendation == risk_level_none
     elif risk_level == "low":
